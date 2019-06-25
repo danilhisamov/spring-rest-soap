@@ -1,0 +1,183 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Car Showroom
+  license:
+    name: MIT
+servers:
+  - url: http://carshowroom.swagger.io/api/v1
+paths:
+  /orders:
+    get:
+      operationId: getOrders
+      summary: List all orders
+      parameters:
+        - name: userId
+          in: query
+          description: User ID to filter
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: state
+          in: query
+          description: State to filter
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Array of requested orders
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderDTOs"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create an order
+      operationId: createOrder
+      requestBody:
+        description: Order to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderDTO'
+      responses:
+        '200':
+          description: Created order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderDTO"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /orders/{orderId}:
+    get:
+      operationId: getOrderById
+      summary: Info for a specific order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          description: The id of the order to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderDTO"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateOrder
+      summary: Update a specific order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          description: The id of the order to retrieve
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Order to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderDTO'
+      responses:
+        '200':
+          description: Order updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderDTO"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteOrder
+      summary: Info for a specific order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          description: The id of the order to delete
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Order updated
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    OrderDTO:
+      properties:
+        id:
+          type: integer
+          format: int64
+        brand:
+          $ref: "#/components/schemas/NamedDTO"
+        model:
+          $ref: "#/components/schemas/NamedDTO"
+        selectedOptions:
+          $ref: "#/components/schemas/NamedDTOs"
+        status:
+          type: string
+        orderDate:
+          type: string
+        user:
+          $ref: "#/components/schemas/NamedDTO"
+    OrderDTOs:
+      type: array
+      items:
+        $ref: "#/components/schemas/OrderDTO"
+    NamedDTO:
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    NamedDTOs:
+      type: array
+      items:
+        $ref: "#/components/schemas/NamedDTO"
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

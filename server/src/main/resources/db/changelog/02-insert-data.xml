@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="2_insert_options" author="dkhisamov">
+        <comment>Inserting Options</comment>
+        <insert tableName="OPTION_TBL">
+            <column name="name" value="спортивный аэродинамический обвес" encoding="UTF-8"/>
+        </insert>
+        <insert tableName="OPTION_TBL">
+            <column name="name" value="отделка салона кожей" encoding="UTF-8"/>
+        </insert>
+        <insert tableName="OPTION_TBL">
+            <column name="name" value="подогрев сидений" encoding="UTF-8"/>
+        </insert>
+        <insert tableName="OPTION_TBL">
+            <column name="name" value="обогрев лобового стекла" encoding="UTF-8"/>
+        </insert>
+        <insert tableName="OPTION_TBL">
+            <column name="name" value="зимняя резина" encoding="UTF-8"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2_insert_brands" author="dkhisamov">
+        <comment>Inserting Brands</comment>
+        <insert tableName="BRAND_TBL">
+            <column name="name" value="Tesla"/>
+        </insert>
+        <insert tableName="BRAND_TBL">
+            <column name="name" value="Subaru"/>
+        </insert>
+        <insert tableName="BRAND_TBL">
+            <column name="name" value="Honda"/>
+        </insert>
+        <insert tableName="BRAND_TBL">
+            <column name="name" value="Toyota"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2_insert_models" author="dkhisamov">
+        <comment>Inserting Model</comment>
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="MODEL X"/>
+            <column name="brand_id" value="1"/>
+        </insert>
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="ROADSTER"/>
+            <column name="brand_id" value="1"/>
+        </insert>
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="MODEL S"/>
+            <column name="brand_id" value="1"/>
+        </insert>
+
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="XV"/>
+            <column name="brand_id" value="2"/>
+        </insert>
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="Outback"/>
+            <column name="brand_id" value="2"/>
+        </insert>
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="WRX"/>
+            <column name="brand_id" value="2"/>
+        </insert>
+
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="Civic"/>
+            <column name="brand_id" value="3"/>
+        </insert>
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="Accord"/>
+            <column name="brand_id" value="3"/>
+        </insert>
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="CR-V"/>
+            <column name="brand_id" value="3"/>
+        </insert>
+
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="Carina"/>
+            <column name="brand_id" value="4"/>
+        </insert>
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="Caldina"/>
+            <column name="brand_id" value="4"/>
+        </insert>
+        <insert tableName="MODEL_TBL">
+            <column name="name" value="Camry"/>
+            <column name="brand_id" value="4"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2_insert_users" author="dkhisamov">
+        <comment>Inserting Users</comment>
+        <insert tableName="USER_TBL">
+            <column name="name" value="John"/>
+            <column name="surname" value="Doe"/>
+        </insert>
+        <insert tableName="USER_TBL">
+            <column name="name" value="Michael"/>
+            <column name="surname" value="Harris"/>
+        </insert>
+        <insert tableName="USER_TBL">
+            <column name="name" value="Richard"/>
+            <column name="surname" value="Smith"/>
+        </insert>
+        <insert tableName="USER_TBL">
+            <column name="name" value="Dean"/>
+            <column name="surname" value="Wolf"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2_insert_model_options" author="dkhisamov">
+        <comment>Inserting Model Options</comment>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="1"/>
+            <column name="option_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="1"/>
+            <column name="option_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="1"/>
+            <column name="option_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="1"/>
+            <column name="option_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="1"/>
+            <column name="option_id" valueNumeric="5"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="2"/>
+            <column name="option_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="2"/>
+            <column name="option_id" valueNumeric="5"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="3"/>
+            <column name="option_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="3"/>
+            <column name="option_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="3"/>
+            <column name="option_id" valueNumeric="5"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="4"/>
+            <column name="option_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="4"/>
+            <column name="option_id" valueNumeric="2"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="5"/>
+            <column name="option_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="5"/>
+            <column name="option_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="5"/>
+            <column name="option_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="5"/>
+            <column name="option_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="5"/>
+            <column name="option_id" valueNumeric="5"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="6"/>
+            <column name="option_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="6"/>
+            <column name="option_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="6"/>
+            <column name="option_id" valueNumeric="5"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="7"/>
+            <column name="option_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="7"/>
+            <column name="option_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="7"/>
+            <column name="option_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="7"/>
+            <column name="option_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="7"/>
+            <column name="option_id" valueNumeric="5"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="8"/>
+            <column name="option_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="8"/>
+            <column name="option_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="8"/>
+            <column name="option_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="8"/>
+            <column name="option_id" valueNumeric="5"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="9"/>
+            <column name="option_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="9"/>
+            <column name="option_id" valueNumeric="5"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="10"/>
+            <column name="option_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="10"/>
+            <column name="option_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="10"/>
+            <column name="option_id" valueNumeric="3"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="11"/>
+            <column name="option_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="11"/>
+            <column name="option_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="11"/>
+            <column name="option_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="11"/>
+            <column name="option_id" valueNumeric="4"/>
+        </insert>
+
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="12"/>
+            <column name="option_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="12"/>
+            <column name="option_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="MODEL_OPTION_TBL">
+            <column name="model_id" valueNumeric="12"/>
+            <column name="option_id" valueNumeric="5"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2_insert_order" author="dkhisamov">
+        <comment>Inserting Orders</comment>
+        <insert tableName="ORDER_TBL">
+            <column name="model_id" valueNumeric="1"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="status" value="RECEIVED"/>
+            <column name="order_date" valueComputed="(SELECT CONVERT(datetime,'Sep 09 12:18:52 2019'))"/>
+        </insert>
+        <insert tableName="ORDER_OPTION_TBL">
+            <column name="order_id" valueNumeric="1"/>
+            <column name="option_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="ORDER_OPTION_TBL">
+            <column name="order_id" valueNumeric="1"/>
+            <column name="option_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="ORDER_OPTION_TBL">
+            <column name="order_id" valueNumeric="1"/>
+            <column name="option_id" valueNumeric="3"/>
+        </insert>
+
+        <insert tableName="ORDER_TBL">
+            <column name="model_id" valueNumeric="8"/>
+            <column name="user_id" valueNumeric="2"/>
+            <column name="status" value="PROCESSING"/>
+            <column name="order_date" valueComputed="(SELECT CONVERT(datetime,'Nov 11 13:18:52 2019'))"/>
+        </insert>
+        <insert tableName="ORDER_OPTION_TBL">
+            <column name="order_id" valueNumeric="2"/>
+            <column name="option_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="ORDER_OPTION_TBL">
+            <column name="order_id" valueNumeric="2"/>
+            <column name="option_id" valueNumeric="5"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

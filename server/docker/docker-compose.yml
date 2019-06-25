@@ -1,0 +1,16 @@
+version: '2'
+services:
+  jm-app:
+    image: java-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - jm-mssql
+  jm-mssql:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=<VeryGoodPassword1234!>
+#    command: /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '<VeryGoodPassword1234!>' -Q "if not exists(select * from sys.databases where name = 'PracticeDB') CREATE DATABASE PracticeDB;"

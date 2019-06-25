@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="1_create_tables" author="dkhisamov">
+        <createTable tableName="BRAND_TBL">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="nvarchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="MODEL_TBL">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="nvarchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="brand_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="MODEL_TBL" baseColumnNames="brand_id"
+                                 constraintName="model_brand_fk"
+                                 referencedTableName="BRAND_TBL" referencedColumnNames="id"/>
+
+        <createTable tableName="OPTION_TBL">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="nvarchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="MODEL_OPTION_TBL">
+            <column name="model_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="option_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="model_id, option_id"
+                       constraintName="model_option_pk"
+                       tableName="MODEL_OPTION_TBL"/>
+        <addForeignKeyConstraint baseTableName="MODEL_OPTION_TBL" baseColumnNames="model_id"
+                                 constraintName="model_option_model_fk"
+                                 referencedTableName="MODEL_TBL" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="MODEL_OPTION_TBL" baseColumnNames="option_id"
+                                 constraintName="model_option_option_fk"
+                                 referencedTableName="OPTION_TBL" referencedColumnNames="id"/>
+
+        <createTable tableName="USER_TBL">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="ORDER_TBL">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="model_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="char(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ORDER_TBL" baseColumnNames="model_id"
+                                 constraintName="order_model_fk"
+                                 referencedTableName="MODEL_TBL" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="ORDER_TBL" baseColumnNames="user_id"
+                                 constraintName="order_user_fk"
+                                 referencedTableName="USER_TBL" referencedColumnNames="id"/>
+
+        <createTable tableName="ORDER_OPTION_TBL">
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="option_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="order_id, option_id"
+                       constraintName="order_option_pk"
+                       tableName="ORDER_OPTION_TBL"/>
+        <addForeignKeyConstraint baseTableName="ORDER_OPTION_TBL" baseColumnNames="order_id"
+                                 constraintName="order_option_order_fk"
+                                 referencedTableName="ORDER_TBL" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="ORDER_OPTION_TBL" baseColumnNames="option_id"
+                                 constraintName="order_option_option_fk"
+                                 referencedTableName="OPTION_TBL" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

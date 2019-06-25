@@ -1,0 +1,72 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id "io.freefair.lombok" version "3.4.0"
+}
+
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+configurations {
+    jaxb
+}
+
+// tag::wsdl[]
+task genJaxb {
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    ext.classesDir = "${buildDir}/classes/jaxb"
+    ext.schema = "http://localhost:8080/ws/orders.wsdl"
+
+    outputs.dir classesDir
+
+    doLast() {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+                    classpath: configurations.jaxb.asPath
+            mkdir(dir: sourcesDir)
+            mkdir(dir: classesDir)
+
+            xjc(destdir: sourcesDir, schema: schema,
+                    package: "ru.merann.practicaltask.client.soap.orders.wsdl") {
+                arg(value: "-wsdl")
+                produces(dir: sourcesDir, includes: "**/*.java")
+            }
+
+            javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
+                    debugLevel: "lines,vars,source",
+                    classpath: configurations.jaxb.asPath) {
+                src(path: sourcesDir)
+                include(name: "**/*.java")
+                include(name: "*.java")
+            }
+
+            copy(todir: classesDir) {
+                fileset(dir: sourcesDir, erroronmissingdir: false) {
+                    exclude(name: "**/*.java")
+                }
+            }
+        }
+    }
+}
+
+// end::wsdl[]
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.ws:spring-ws-core")
+    compile(files(genJaxb.classesDir).builtBy(genJaxb))
+    implementation 'org.apache.commons:commons-lang3:3.9'
+    implementation 'org.springframework.shell:spring-shell-starter:2.0.0.RELEASE'
+    jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+bootJar {
+    baseName = 'practical-task-client-soap'
+    version =  '0.1.0'
+
+    from genJaxb.classesDir
+}

@@ -1,0 +1,109 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://practicaltask.merann.ru/soap/jaxb"
+           targetNamespace="http://practicaltask.merann.ru/soap/jaxb" elementFormDefault="qualified">
+
+    <xs:element name="getOrdersRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" nillable="true" name="userId" type="xs:long"/>
+                <xs:element minOccurs="0" nillable="true" name="state" type="tns:state"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getOrdersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="orders" minOccurs="0" maxOccurs="unbounded" type="tns:order"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getOrderRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="orderId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getOrderResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="order" type="tns:order"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="createOrderRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="order" type="tns:order"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="createOrderResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="order" type="tns:order"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateOrderRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="order" type="tns:order"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateOrderResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="order" type="tns:order"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteOrderRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="orderId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteOrderResponse">
+        <xs:complexType>
+            <xs:sequence />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="order">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="id" type="xs:long"/>
+            <xs:element minOccurs="0" name="brand" type="tns:named"/>
+            <xs:element name="model" type="tns:named"/>
+            <xs:element minOccurs="0" name="selectedOptions" maxOccurs="unbounded" nillable="true" type="tns:named"/>
+            <xs:element minOccurs="0" name="state" type="tns:state"/>
+            <xs:element minOccurs="0" name="orderDate" type="xs:string"/>
+            <xs:element minOccurs="0" name="user" type="tns:named"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="named">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="state">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="RECEIVED"/>
+            <xs:enumeration value="PROCESSING"/>
+            <xs:enumeration value="FINISHED"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,5 @@
+rootProject.name = 'practical-task'
+include 'server'
+include 'client-rest'
+include 'client-soap'
+

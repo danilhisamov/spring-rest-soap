@@ -1,0 +1,119 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.1.4.RELEASE"
+        classpath "org.openapitools:openapi-generator-gradle-plugin:4.0.2"
+    }
+}
+
+plugins {
+    id "io.freefair.lombok" version "3.4.0"
+}
+
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.openapi.generator'
+
+group = 'ru.merann'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    jaxb {}
+}
+
+def specLocation = "$projectDir/car-showroom-v3.0.yaml"
+
+openApiValidate {
+    inputSpec = specLocation.toString()
+}
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$specLocation".toString()
+    outputDir = "$projectDir".toString()
+    apiPackage = "ru.merann.practicaltask.rest.api"
+    invokerPackage = "ru.merann.practicaltask.invoker"
+    modelPackage = "ru.merann.practicaltask.rest.model"
+    configOptions = [
+            dateLibrary: "java8"
+    ]
+    systemProperties = [
+            modelDocs: "false"
+    ]
+}
+
+task genJaxb { 
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    ext.classesDir = "${buildDir}/classes/jaxb"
+    ext.schema = "src/main/resources/soap-orders.xsd"
+
+    outputs.dir classesDir
+
+    doLast() {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+                    classpath: configurations.jaxb.asPath
+            
+            delete(sourcesDir, classesDir)
+            mkdir(dir: sourcesDir)
+            mkdir(dir: classesDir)
+
+            xjc(destdir: sourcesDir, schema: schema) {
+                arg(value: "-wsdl")
+                produces(dir: sourcesDir, includes: "**/*.java")
+            }
+
+            javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
+                    debugLevel: "lines,vars,source",) {
+                src(path: sourcesDir)
+                include(name: "**/*.java")
+                include(name: "*.java")
+            }
+
+            copy(todir: classesDir) {
+                fileset(dir: sourcesDir, erroronmissingdir: false) {
+                    exclude(name: "**/*.java")
+                }
+            }
+        }
+    }
+}
+
+bootJar {
+    mainClassName = 'ru.merann.practicaltask.invoker.OpenAPI2SpringBoot'
+    baseName = 'practical-task-all'
+    version = '0.1.0'
+    from genJaxb.classesDir
+}
+
+task copyAppToDocker(type: Copy, dependsOn: bootJar) {
+    from "${buildDir}/libs"
+    include "${bootJar.getArchiveBaseName().get()}-${bootJar.getVersion()}.jar"
+    into "$projectDir/docker"
+}
+
+bootJar.finalizedBy(copyAppToDocker)
+
+dependencies {
+    compile 'org.apache.cxf:cxf-spring-boot-starter-jaxws:3.3.1'
+    compile 'org.apache.cxf:cxf-rt-features-logging:3.3.1'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-web-services'
+    compile 'javax.validation:validation-api'
+    compile 'io.springfox:springfox-swagger2:2.8.0'
+    compile 'io.springfox:springfox-swagger-ui:2.8.0'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.liquibase:liquibase-core'
+    runtime 'org.springframework.boot:spring-boot-devtools'
+    runtime 'com.microsoft.sqlserver:mssql-jdbc'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    compile("wsdl4j:wsdl4j:1.6.1")
+    jaxb("org.glassfish.jaxb:jaxb-xjc:2.2.11")
+    compile(files(genJaxb.classesDir).builtBy(genJaxb))
+}
