@@ -1,7 +1,7 @@
 version: '2'
 services:
   jm-app:
-    image: java-app
+    image: dkh-pr1
     ports:
       - "8080:8080"
     depends_on:

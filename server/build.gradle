@@ -1,27 +1,12 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.1.4.RELEASE"
-        classpath "org.openapitools:openapi-generator-gradle-plugin:4.0.2"
-    }
-}
-
 plugins {
-    id "io.freefair.lombok" version "3.4.0"
+    id "org.openapi.generator" version "4.0.2"
 }
-
-apply plugin: 'application'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'org.openapi.generator'
 
 group = 'ru.merann'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+mainClassName = 'ru.merann.practicaltask.invoker.OpenAPI2SpringBoot'
 
 configurations {
     jaxb {}
@@ -86,7 +71,6 @@ task genJaxb {
 }
 
 bootJar {
-    mainClassName = 'ru.merann.practicaltask.invoker.OpenAPI2SpringBoot'
     baseName = 'practical-task-all'
     version = '0.1.0'
     from genJaxb.classesDir

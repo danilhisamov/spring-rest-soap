@@ -1,7 +1,22 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'io.freefair.lombok' version "3.7.5" apply false
+}
+
 allprojects {
     apply plugin: 'java'
+    apply plugin: 'application'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
     repositories {
+        mavenLocal()
         mavenCentral()
+    }
+}
+
+subprojects {
+    if (name.equals('server') || name.equals("client-rest")) {
+        apply plugin: 'io.freefair.lombok'
     }
 }
