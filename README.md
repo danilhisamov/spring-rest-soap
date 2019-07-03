@@ -11,6 +11,8 @@ Spring Boot + REST + SOAP + Docker
 - Move to **server/docker** directory
 - Execute **docker-build-run.bat**
 
+**NOTE**: You may need to pull the **mcr.microsoft.com/mssql/server:2017-latest** image before running .bat file.
+
 ## Run clients
 - You can run clients using IDE (running **ClientSoapApplication** or  **ClientRestApplication** classes)
 - You can run clients using client JAR's that have already built in **Build** section. 
